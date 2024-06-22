@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Salary Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .results {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Salary Simulator</h2>
+        <form id="salaryForm">
+            <div class="form-group">
+                <label for="grossSalary">Gross Monthly Salary (EUR):</label>
+                <input type="number" id="grossSalary" name="grossSalary" required>
+            </div>
+            <div class="form-group">
+                <label for="hoursPaid">Hours Paid:</label>
+                <input type="number" id="hoursPaid" name="hoursPaid" value="162.50" required>
+            </div>
+            <div class="form-group">
+                <label for="paidLeave">Paid Leave (Days):</label>
+                <input type="number" id="paidLeave" name="paidLeave" value="10" required>
+            </div>
+            <button type="button" onclick="calculateSalary()">Calculate Salary</button>
+        </form>
+        <div class="results">
+            <h3>Results</h3>
+            <p id="totalGross"></p>
+            <p id="totalNet"></p>
+        </div>
+    </div>
+
+    <script>
+        function calculateSalary() {
+            const grossSalary = parseFloat(document.getElementById('grossSalary').value);
+            const hoursPaid = parseFloat(document.getElementById('hoursPaid').value);
+            const paidLeave = parseFloat(document.getElementById('paidLeave').value);
+
+            const brut = grossSalary;
+            const maladie = brut * 0.07;
+            const complementaire = brut * 0.06;
+            const familiales = brut * 0.0345;
+            const solidarite = brut * 0.003;
+            const retraite = brut * 0.105;
+            const social = brut * 0.08;
+            const prevoyance = brut * 0.0075;
+
+            const totalBrut = brut - maladie - complementaire - familiales - solidarite - retraite - social - prevoyance;
+
+            const transportAllowance = 36.30;
+            const internalTax = 186.00;
+            const totalNet = totalBrut - transportAllowance - internalTax;
+
+            document.getElementById('totalGross').innerText = `Total Gross Salary: €${brut.toFixed(2)}`;
+            document.getElementById('totalNet').innerText = `Total Net Salary: €${totalNet.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
